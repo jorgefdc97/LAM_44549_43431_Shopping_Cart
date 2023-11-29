@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DataBaseTest</string>
+    <string name="listaDeContactos">Lista de contactos</string>
+</resources>
