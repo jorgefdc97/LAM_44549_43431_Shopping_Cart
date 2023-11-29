@@ -6,19 +6,23 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textViewNome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/description_textview"
+        android:layout_width="244dp"
+        android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/textViewMorada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/quantity_textview"
+        android:layout_width="16dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="@string/quantity"
+        android:inputType="text" />
+
+    <CheckBox
+        android:id="@+id/bought_checkbox"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1" />
 </LinearLayout>

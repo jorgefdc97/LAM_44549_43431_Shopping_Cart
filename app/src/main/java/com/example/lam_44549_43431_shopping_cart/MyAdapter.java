@@ -3,6 +3,7 @@ package com.example.lam_44549_43431_shopping_cart;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,9 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private List<Contact>  mDataset;
+    private List<Product>  mDataset;
 
-    public MyAdapter(List<Contact> mDataset) {
+    public MyAdapter(List<Product> mDataset) {
 
         this.mDataset = mDataset;
     }
@@ -30,9 +31,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.id.setText(new Integer(mDataset.get(position).getId()).toString());
-        holder.nome.setText(mDataset.get(position).getNome());
-        holder.morada.setText(mDataset.get(position).getMorada());
+        holder.description.setText(mDataset.get(position).getDescription());
+        holder.quantity.setText(mDataset.get(position).getQuantity());
+        holder.bought.setActivated(mDataset.get(position).getBought());
     }
 
     @Override
@@ -41,16 +42,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView id;
-        TextView nome;
-        TextView morada;
+        TextView description;
+        TextView quantity;
+        CheckBox bought;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            id = (TextView) itemView.findViewById(R.id.textViewId);
-            nome = (TextView) itemView.findViewById(R.id.textViewNome);
-            morada = (TextView) itemView.findViewById(R.id.textViewMorada);
-
+            description = (TextView) itemView.findViewById(R.id.description_textview);
+            quantity = (TextView) itemView.findViewById(R.id.quantity_textview);
+            bought = (CheckBox) itemView.findViewById(R.id.bought_checkbox);
         }
     }
 }

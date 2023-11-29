@@ -13,12 +13,13 @@ import java.util.List;
 public class DB_Handler extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "CONTACTOS";
-    private static final String TABLE_NAME= "contactos";
+    private static final String DATABASE_NAME = "PRODUCTS";
+    private static final String TABLE_NAME= "products";
 
     private static final String ID = "id";
-    private static final String NOME = "nome";
-    private static final String MORADA = "morada";
+    private static final String DESCRIPTION = "description";
+    private static final String QUANTITY = "quantity";
+    private static final String BOUGHT = "bought";
 
     private Context context;
 
@@ -29,10 +30,12 @@ public class DB_Handler extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-                + ID + " INTEGER PRIMARY KEY," + NOME + " TEXT,"
-                + MORADA + " TEXT" + ")";
-        sqLiteDatabase.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + ID + " INTEGER PRIMARY KEY,"
+                + DESCRIPTION + " TEXT,"
+                + QUANTITY + " INT,"
+                + BOUGHT + " INT" + ")";
+        sqLiteDatabase.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
     @Override
@@ -41,30 +44,31 @@ public class DB_Handler extends SQLiteOpenHelper{
         onCreate(sqLiteDatabase);
     }
 
-    void adicionarContacto(Contact contact) {
+    void add_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NOME, contact.getNome());
-        values.put(MORADA, contact.getMorada());
+        values.put(DESCRIPTION, product.getDescription());
+        values.put(QUANTITY, product.getQuantity());
+        values.put(BOUGHT, product.getBought());
 
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
 
-    public Contact getContacto(int id) {
+    public Product get_product(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[] { ID, NOME, MORADA}, ID + "=?",
+        Cursor cursor = db.query(TABLE_NAME, new String[] { ID, DESCRIPTION, QUANTITY, BOUGHT}, ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+        Product product = new Product(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
 
-        return contact;
+        return product;
     }
 
-    public List<Contact> getAllContacts() {
-        List<Contact> contactList = new ArrayList<Contact>();
+    public List<Product> get_all_products() {
+        List<Product> productsList = new ArrayList<Product>();
 
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -73,37 +77,39 @@ public class DB_Handler extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             do {
-                Contact contact = new Contact();
-                contact.setId(Integer.parseInt(cursor.getString(0)));
-                contact.setNome(cursor.getString(1));
-                contact.setMorada(cursor.getString(2));
+                Product product = new Product();
+                product.setId(Integer.parseInt(cursor.getString(0)));
+                product.setDescription(cursor.getString(1));
+                product.setQuantity(Integer.parseInt(cursor.getString(2)));
+                product.setBought(Integer.parseInt(cursor.getString(3)));
 
-                contactList.add(contact);
+                productsList.add(product);
             } while (cursor.moveToNext());
         }
 
-        return contactList;
+        return productsList;
     }
 
-    public int updateContacto(Contact contact) {
+    public int update_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(NOME, contact.getNome());
-        values.put(MORADA, contact.getMorada());
+        values.put(DESCRIPTION, product.getDescription());
+        values.put(QUANTITY, product.getQuantity());
+        values.put(BOUGHT, product.getBought());
 
         return db.update(TABLE_NAME, values, ID + " = ?",
-                new String[]{String.valueOf(contact.getId())});
+                new String[]{String.valueOf(product.getId())});
     }
 
-    public void deleteContacto(Contact contact) {
+    public void delete_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, ID + " = ?",
-                new String[] { String.valueOf(contact.getId()) });
+                new String[] { String.valueOf(product.getId()) });
         db.close();
     }
 
-    public boolean doesDatabaseExist() {
+    public boolean check_database_existance() {
         File dbFile = this.context.getDatabasePath(DATABASE_NAME);
         return dbFile.exists();
     }

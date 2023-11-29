@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">DataBaseTest</string>
-    <string name="listaDeContactos">Lista de contactos</string>
+    <string name="app_name">DB_47289_38909</string>
+    <string name="listaDeContactos">Shopping Cart</string>
+    <string name="btnSA">SHOW ALL</string>
+    <string name="btnCI">SHOW NOT ADDED PRODUCTS</string>
+    <string name="btnCA">SHOW ADDED PRODUCTS</string>
+    <string name="btnCDB">REBOOT DATABASE</string>
+    <string name="quantity">Qnt:</string>
 </resources>

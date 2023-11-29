@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DB_Handler db = new DB_Handler(this);
 
-        if(!db.doesDatabaseExist()) {
+        if(!db.check_database_existance()) {
             db.adicionarContacto(new Contact(1, "Maria", "Porto"));
             db.adicionarContacto(new Contact(2, "Joaquim", "Coimbra"));
             db.adicionarContacto(new Contact(3, "Mariana", "Lisboa"));
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Contact> contacts = db.getAllContacts();
-        mAdapter = new MyAdapter(contacts);
+        List<Product> products = db.get_all_products();
+        mAdapter = new MyAdapter(products);
         recyclerView.setAdapter(mAdapter);
 
     }
