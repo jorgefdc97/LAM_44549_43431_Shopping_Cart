@@ -6,11 +6,14 @@ public class Product {
     private int quantity;
     private int bought;
 
+    private static int idNum=0;
+
     public Product(){}
-    public Product(int id, String description, int quantity, int bought) {
+    public Product(String description, int quantity, int bought) {
         this.description = description;
         this.quantity = quantity;
         this.bought = bought;
+        this.id=idNum++;
     }
 
     public int getId() {

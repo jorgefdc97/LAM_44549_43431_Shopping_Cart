@@ -20,7 +20,6 @@ public class DB_Handler extends SQLiteOpenHelper{
     private static final String DESCRIPTION = "description";
     private static final String QUANTITY = "quantity";
     private static final String BOUGHT = "bought";
-
     private Context context;
 
     DB_Handler(Context context) {
@@ -47,6 +46,7 @@ public class DB_Handler extends SQLiteOpenHelper{
     void add_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(ID,product.getId());
         values.put(DESCRIPTION, product.getDescription());
         values.put(QUANTITY, product.getQuantity());
         values.put(BOUGHT, product.getBought());
@@ -61,8 +61,8 @@ public class DB_Handler extends SQLiteOpenHelper{
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        Product product = new Product(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
+        Product product = new Product(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                Integer.parseInt(cursor.getString(3)));
 
         return product;
     }
@@ -112,5 +112,11 @@ public class DB_Handler extends SQLiteOpenHelper{
     public boolean check_database_existance() {
         File dbFile = this.context.getDatabasePath(DATABASE_NAME);
         return dbFile.exists();
+    }
+    public void deleteDB() {
+        if(check_database_existance()) {
+            File dbFile = this.context.getDatabasePath(DATABASE_NAME);
+            dbFile.delete();
+        }
     }
 }

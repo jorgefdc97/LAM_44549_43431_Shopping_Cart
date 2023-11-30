@@ -32,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.description.setText(mDataset.get(position).getDescription());
-        holder.quantity.setText(mDataset.get(position).getQuantity());
+        holder.quantity.setText(new Integer(mDataset.get(position).getQuantity()).toString());
         holder.bought.setActivated(mDataset.get(position).getBought());
     }
 

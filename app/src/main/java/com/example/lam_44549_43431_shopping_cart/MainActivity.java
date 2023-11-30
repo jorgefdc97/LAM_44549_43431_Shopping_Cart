@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import java.util.List;
@@ -19,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DB_Handler db = new DB_Handler(this);
-
+        db.deleteDB();
         if(!db.check_database_existance()) {
-            db.adicionarContacto(new Contact(1, "Maria", "Porto"));
-            db.adicionarContacto(new Contact(2, "Joaquim", "Coimbra"));
-            db.adicionarContacto(new Contact(3, "Mariana", "Lisboa"));
+            db.add_product(new Product("Chiclete",10, 0));
+            db.add_product(new Product("Pastilha",65, 0));
+            db.add_product(new Product("Chicla",80, 0));
         }
 
         recyclerView = findViewById(R.id.recyclerView);
