@@ -20,7 +20,7 @@ public class DB_Handler extends SQLiteOpenHelper{
     private static final String DESCRIPTION = "description";
     private static final String QUANTITY = "quantity";
     private static final String BOUGHT = "bought";
-    private Context context;
+    private final Context context;
 
     DB_Handler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,6 +35,7 @@ public class DB_Handler extends SQLiteOpenHelper{
                 + QUANTITY + " INT,"
                 + BOUGHT + " INT" + ")";
         sqLiteDatabase.execSQL(CREATE_PRODUCTS_TABLE);
+        Product.idNum=0;
     }
 
     @Override
@@ -61,6 +62,7 @@ public class DB_Handler extends SQLiteOpenHelper{
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+        assert cursor != null;
         Product product = new Product(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
                 Integer.parseInt(cursor.getString(3)));
 
@@ -117,6 +119,12 @@ public class DB_Handler extends SQLiteOpenHelper{
         if(check_database_existance()) {
             File dbFile = this.context.getDatabasePath(DATABASE_NAME);
             dbFile.delete();
+            Product.idNum=0;
         }
+    }
+    public void reconstructDB() {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }
