@@ -6,7 +6,7 @@ public class Product {
     private int quantity;
     private int bought;
 
-    private static int idNum=0;
+    public static int idNum=0;
 
     public Product(){}
     public Product(String description, int quantity, int bought) {
@@ -14,6 +14,12 @@ public class Product {
         this.quantity = quantity;
         this.bought = bought;
         this.id=idNum++;
+    }
+    public Product(String description){
+        this.description=description;
+        quantity=0;
+        bought=0;
+        id=idNum++;
     }
 
     public int getId() {
@@ -42,11 +48,7 @@ public class Product {
 
     public boolean getBought() {
         boolean bool;
-        if(bought==0){
-            bool = false;
-        }else{
-            bool = true;
-        }
+        bool = bought != 0;
         return bool;
     }
 
