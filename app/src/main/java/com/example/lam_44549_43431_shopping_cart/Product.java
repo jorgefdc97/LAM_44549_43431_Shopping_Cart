@@ -13,7 +13,6 @@ public class Product {
         this.description = description;
         this.quantity = quantity;
         this.bought = bought;
-        this.id=idNum++;
     }
     public Product(String description){
         this.description=description;

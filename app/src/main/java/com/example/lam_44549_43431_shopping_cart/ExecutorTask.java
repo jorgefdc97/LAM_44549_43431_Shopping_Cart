@@ -27,7 +27,7 @@ public class ExecutorTask {
         db.reconstructDB();
         HttpHandler handler;
         handler= new HttpHandler();
-        ArrayList<String> products=new ArrayList<>();
+        ArrayList<String> products = new ArrayList<>();
         products=handler.getProducts(url);
         for(String product:products) {
             db.add_product(new Product(product));

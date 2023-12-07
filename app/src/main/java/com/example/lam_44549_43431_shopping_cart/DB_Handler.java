@@ -92,6 +92,50 @@ public class DB_Handler extends SQLiteOpenHelper{
         return productsList;
     }
 
+    public List<Product> getAllProductsInCart() {
+        List<Product> productsList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=1" + " AND " + QUANTITY + ">0";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setId(Integer.parseInt(cursor.getString(0)));
+                product.setDescription(cursor.getString(1));
+                product.setQuantity(Integer.parseInt(cursor.getString(2)));
+                product.setBought(Integer.parseInt(cursor.getString(3)));
+
+                productsList.add(product);
+            } while (cursor.moveToNext());
+        }
+
+        return productsList;
+    }
+
+    public List<Product> getAllProductsNotInCart() {
+        List<Product> productsList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=0" + " AND " + QUANTITY + ">0";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setId(Integer.parseInt(cursor.getString(0)));
+                product.setDescription(cursor.getString(1));
+                product.setQuantity(Integer.parseInt(cursor.getString(2)));
+                product.setBought(Integer.parseInt(cursor.getString(3)));
+
+                productsList.add(product);
+            } while (cursor.moveToNext());
+        }
+
+        return productsList;
+    }
+
     public int update_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
