@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DB_Handler extends SQLiteOpenHelper{
@@ -15,7 +16,6 @@ public class DB_Handler extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "PRODUCTS";
     private static final String TABLE_NAME= "products";
-
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
     private static final String QUANTITY = "quantity";
@@ -30,12 +30,11 @@ public class DB_Handler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-                + ID + " INTEGER PRIMARY KEY,"
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + DESCRIPTION + " TEXT,"
                 + QUANTITY + " INT,"
                 + BOUGHT + " INT" + ")";
         sqLiteDatabase.execSQL(CREATE_PRODUCTS_TABLE);
-        Product.idNum=0;
     }
 
     @Override
@@ -65,12 +64,11 @@ public class DB_Handler extends SQLiteOpenHelper{
         assert cursor != null;
         Product product = new Product(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
                 Integer.parseInt(cursor.getString(3)));
-
         return product;
     }
 
-    public List<Product> get_all_products() {
-        List<Product> productsList = new ArrayList<Product>();
+    public ArrayList<Product> get_all_products() {
+        ArrayList<Product> productsList = new ArrayList<Product>();
 
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -88,12 +86,12 @@ public class DB_Handler extends SQLiteOpenHelper{
                 productsList.add(product);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         return productsList;
     }
 
-    public List<Product> getAllProductsInCart() {
-        List<Product> productsList = new ArrayList<>();
+    public ArrayList<Product> getAllProductsInCart() {
+        ArrayList<Product> productsList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=1" + " AND " + QUANTITY + ">0";
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -110,12 +108,11 @@ public class DB_Handler extends SQLiteOpenHelper{
                 productsList.add(product);
             } while (cursor.moveToNext());
         }
-
         return productsList;
     }
 
-    public List<Product> getAllProductsNotInCart() {
-        List<Product> productsList = new ArrayList<>();
+    public ArrayList<Product> getAllProductsNotInCart() {
+        ArrayList<Product> productsList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=0" + " AND " + QUANTITY + ">0";
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -132,25 +129,23 @@ public class DB_Handler extends SQLiteOpenHelper{
                 productsList.add(product);
             } while (cursor.moveToNext());
         }
-
         return productsList;
     }
 
-    public int update_product(Product product) {
+    public void update_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DESCRIPTION, product.getDescription());
         values.put(QUANTITY, product.getQuantity());
         values.put(BOUGHT, product.getBought());
 
-        return db.update(TABLE_NAME, values, ID + " = ?",
+        db.update(TABLE_NAME, values, DESCRIPTION + " = ?",
                 new String[]{String.valueOf(product.getId())});
     }
 
     public void delete_product(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, ID + " = ?",
+        db.delete(TABLE_NAME, DESCRIPTION + " = ?",
                 new String[] { String.valueOf(product.getId()) });
         db.close();
     }
@@ -163,7 +158,7 @@ public class DB_Handler extends SQLiteOpenHelper{
         if(check_database_existance()) {
             File dbFile = this.context.getDatabasePath(DATABASE_NAME);
             dbFile.delete();
-            Product.idNum=0;
+            Product.ID_NUM=0;
         }
     }
     public void reconstructDB() {

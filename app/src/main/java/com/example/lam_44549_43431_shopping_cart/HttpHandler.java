@@ -16,7 +16,7 @@ import java.util.ArrayList;
 class HttpHandler {
     private static final String TAG = HttpHandler.class.getSimpleName();
 
-    ArrayList<String> getProducts(String urlParam) {
+    public void getProducts(String urlParam) {
         ArrayList<String> resultado = null;
         URL url;
         HttpURLConnection conn;
@@ -29,6 +29,9 @@ class HttpHandler {
             conn.setRequestMethod("GET");
             in = new BufferedInputStream(conn.getInputStream());
             resultado = convertStreamToArray(in);
+            for(String product:resultado) {
+                MainActivity.db.add_product(new Product(product));
+            }
 
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
@@ -39,7 +42,6 @@ class HttpHandler {
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
-        return resultado;
     }
 
     private ArrayList<String> convertStreamToArray(InputStream is) {

@@ -6,7 +6,7 @@ public class Product {
     private int quantity;
     private int bought;
 
-    public static int idNum=0;
+    public static int ID_NUM=0;
 
     public Product(){}
     public Product(String description, int quantity, int bought) {
@@ -16,9 +16,9 @@ public class Product {
     }
     public Product(String description){
         this.description=description;
-        quantity=0;
-        bought=0;
-        id=idNum++;
+        this.quantity = 0;
+        this.bought = 0;
+        id=ID_NUM++;
     }
 
     public int getId() {
@@ -45,10 +45,18 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public boolean getBought() {
-        boolean bool;
-        bool = bought != 0;
-        return bool;
+    public int getBought() {
+        return this.bought;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", bought=" + bought +
+                '}';
     }
 
     public void setBought(int bought) {

@@ -7,24 +7,26 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/listagemDaBaseDeDados"
+        android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="@string/listaDeContactos"
+        android:text="@string/shopping_cart"
+        android:textSize="@dimen/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="381dp"
-        android:layout_height="483dp"
+        android:layout_width="382dp"
+        android:layout_height="438dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/listagemDaBaseDeDados" />
+        app:layout_constraintTop_toBottomOf="@id/titleView"
+        app:layout_constraintVertical_bias="0.044" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -34,40 +36,65 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btnSA" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/button2"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="80dp"
+        <LinearLayout
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/btnCI" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button3"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btnCA" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="@dimen/button_width_small"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClickShowNotInCart"
+                android:text="@string/products_not_cart"/>
 
-        <Button
-            android:id="@+id/button4"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btnCDB" />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="@dimen/button_width_small"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClickShowInCart"
+                android:text="@string/products_cart" />
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="214dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="@dimen/button_width_big"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClickShowAll"
+                android:text="@string/all_products" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="@dimen/button_width_big"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/reboot_database" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
