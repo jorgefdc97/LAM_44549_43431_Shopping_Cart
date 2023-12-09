@@ -14,6 +14,12 @@ public class Product {
         this.quantity = quantity;
         this.bought = bought;
     }
+    public Product(int id,String description, int quantity, int bought) {
+        this.id = id;
+        this.description = description;
+        this.quantity = quantity;
+        this.bought = bought;
+    }
     public Product(String description){
         this.description=description;
         this.quantity = 0;

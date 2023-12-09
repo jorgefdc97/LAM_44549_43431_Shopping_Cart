@@ -26,7 +26,22 @@ public class ExecutorTask {
     }
     public void doWork(String url) {
         db.reconstructDB();
+
         HttpHandler handler = new HttpHandler();
         handler.getProducts(url);
+
+
+        /*
+        MainActivity.db.add_product(new Product("Produto1", 2, 1));
+        MainActivity.db.add_product(new Product("Produto2", 2, 1));
+        MainActivity.db.add_product(new Product("Produto3", 2, 1));
+        MainActivity.db.add_product(new Product("Produto4", 2, 0));
+        MainActivity.db.add_product(new Product("Produto5", 2, 0));
+        MainActivity.db.add_product(new Product("Produto6", 2, 0));
+        MainActivity.db.add_product(new Product("Produto7", 2, 0));
+        MainActivity.db.add_product(new Product("Produto8", 2, 0));
+        MainActivity.db.add_product(new Product("Produto9", 2, 0));
+        MainActivity.db.add_product(new Product("Produto10", 2, 1));
+        */
     }
 }

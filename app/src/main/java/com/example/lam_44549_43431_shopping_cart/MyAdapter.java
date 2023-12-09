@@ -37,11 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         if(product != null) {
             holder.descriptionView.setText(mDataset.get(position).getDescription());
             holder.quantityView.setText(new Integer(mDataset.get(position).getQuantity()).toString());
-            if(mDataset.get(position).getBought() == 0) {
-                holder.boughtBox.setActivated(false);
-            } else {
-                holder.boughtBox.setActivated(true);
-            }
+            holder.boughtBox.setChecked(mDataset.get(position).getBought() != 0);
         }
     }
     @Override

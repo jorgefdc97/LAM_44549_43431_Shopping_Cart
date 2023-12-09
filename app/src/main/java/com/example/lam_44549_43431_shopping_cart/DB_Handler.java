@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,7 +53,6 @@ public class DB_Handler extends SQLiteOpenHelper{
         values.put(BOUGHT, product.getBought());
 
         db.insert(TABLE_NAME, null, values);
-        db.close();
     }
 
     public Product get_product(int id) {
@@ -92,7 +92,7 @@ public class DB_Handler extends SQLiteOpenHelper{
 
     public ArrayList<Product> getAllProductsInCart() {
         ArrayList<Product> productsList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=1" + " AND " + QUANTITY + ">0";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " = 1 AND " + QUANTITY + " > 0";
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -108,16 +108,17 @@ public class DB_Handler extends SQLiteOpenHelper{
                 productsList.add(product);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return productsList;
     }
 
     public ArrayList<Product> getAllProductsNotInCart() {
         ArrayList<Product> productsList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + "=0" + " AND " + QUANTITY + ">0";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " = 0";
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        Log.e("ENTRADA CURSOR", String.valueOf(cursor.moveToFirst()));
         if (cursor.moveToFirst()) {
             do {
                 Product product = new Product();
@@ -127,8 +128,11 @@ public class DB_Handler extends SQLiteOpenHelper{
                 product.setBought(Integer.parseInt(cursor.getString(3)));
 
                 productsList.add(product);
+                Log.e("PRODUCT CURSOR",product.toString());
             } while (cursor.moveToNext());
         }
+        cursor.close();
+        Log.e("PRODUCTS LIST CURSOR",productsList.toString());
         return productsList;
     }
 

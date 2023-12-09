@@ -31,9 +31,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         }else{
             bought = 0;
         }
-
+        /*
         quantityView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
@@ -52,5 +51,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
                 Toast.makeText(MainActivity.context, descriptionView.getText().toString()+" has been added to cart", Toast.LENGTH_LONG).show();
             }
         });
+
+         */
     }
 }
