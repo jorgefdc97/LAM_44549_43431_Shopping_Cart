@@ -114,7 +114,7 @@ public class DB_Handler extends SQLiteOpenHelper{
 
     public ArrayList<Product> getAllProductsNotInCart() {
         ArrayList<Product> productsList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " = 0";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " > 0";
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -144,7 +144,7 @@ public class DB_Handler extends SQLiteOpenHelper{
         values.put(BOUGHT, product.getBought());
 
         db.update(TABLE_NAME, values, DESCRIPTION + " = ?",
-                new String[]{String.valueOf(product.getId())});
+                new String[]{String.valueOf(product.getDescription())});
     }
 
     public void delete_product(Product product) {

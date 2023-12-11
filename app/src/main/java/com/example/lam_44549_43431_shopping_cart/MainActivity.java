@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
          /*
         MainActivity.db.add_product(new Product(1,"Produto1", 2, 1));
         MainActivity.db.add_product(new Product(2,"Produto2", 2, 1));

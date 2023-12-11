@@ -1,5 +1,6 @@
 package com.example.lam_44549_43431_shopping_cart;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Product product = mDataset.get(position);
+        Log.d("JT",""+position);
         if(product != null) {
             holder.descriptionView.setText(mDataset.get(position).getDescription());
             holder.quantityView.setText(new Integer(mDataset.get(position).getQuantity()).toString());
