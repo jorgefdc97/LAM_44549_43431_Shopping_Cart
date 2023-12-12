@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         if(db.check_database_existence()){
             db.reconstructDB();
         }
+
         new ExecutorTask(executorService,mainThreadHandler,url,db);
 
         recyclerView = findViewById(R.id.recyclerView);

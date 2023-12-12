@@ -98,7 +98,9 @@ public class DB_Handler extends SQLiteOpenHelper{
 
     public ArrayList<Product> getAllProductsNotInCart() {
         ArrayList<Product> productsList = new ArrayList<>();
+      
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " = 0 AND " + QUANTITY + " > 0";
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -126,7 +128,6 @@ public class DB_Handler extends SQLiteOpenHelper{
 
         db.update(TABLE_NAME, values, DESCRIPTION + " = ?",
                 new String[]{String.valueOf(product.getDescription())});
-    }
 
     public boolean check_database_existence() {
         File dbFile = this.context.getDatabasePath(DATABASE_NAME);
