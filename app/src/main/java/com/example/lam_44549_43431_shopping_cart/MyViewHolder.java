@@ -14,9 +14,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
     public TextView descriptionView;
     public TextView quantityView;
     public CheckBox boughtBox;
- //   private String description;
-//    private String quantity;
- //   private int bought;
+
+    private String description;
+    private String quantity;
+    private int bought;
+
 
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,13 +26,13 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         quantityView = (EditText) itemView.findViewById(R.id.quantity_textview);
         boughtBox = (CheckBox) itemView.findViewById(R.id.bought_checkbox);
 
-       // description = descriptionView.getText().toString();
-       // quantity = quantityView.getText().toString();
-//        if(boughtBox.isChecked()){
-//            bought = 1;
-//        }else{
-//            bought = 0;
-//        }
+        description = descriptionView.getText().toString();
+        quantity = quantityView.getText().toString();
+        if(boughtBox.isChecked()){
+            bought = 1;
+        }else{
+            bought = 0;
+        }
 
         quantityView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -38,7 +40,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
                 if(!hasFocus){
                     Product product = new Product(descriptionView.getText().toString(), Integer.parseInt(quantityView.getText().toString()), boughtBox.isChecked()?1:0);
                     MainActivity.db.update_product(product);
-                    Toast.makeText(MainActivity.context, "Quantity changed", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -46,12 +47,17 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         boughtBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton box, boolean isChecked) {
+
+                if(isChecked){
+                    Toast.makeText(MainActivity.context, descriptionView.getText().toString() + " has been added to cart", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.context, descriptionView.getText().toString() + " has been removed from cart", Toast.LENGTH_SHORT).show();
+                }
+
                 Product product = new Product(descriptionView.getText().toString(), Integer.parseInt(quantityView.getText().toString()), boughtBox.isChecked()?1:0);
+
                 MainActivity.db.update_product(product);
-                Toast.makeText(MainActivity.context, descriptionView.getText().toString()+" has been added to cart", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 }
