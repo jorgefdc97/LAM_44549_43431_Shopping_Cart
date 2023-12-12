@@ -9,11 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.io.File;
 import java.util.ArrayList;
 
-public class DB_Handler extends SQLiteOpenHelper{
+public class DB_Handler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "PRODUCTS";
-    private static final String TABLE_NAME= "products";
+    private static final String TABLE_NAME = "products";
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
     private static final String QUANTITY = "quantity";
@@ -98,7 +98,7 @@ public class DB_Handler extends SQLiteOpenHelper{
 
     public ArrayList<Product> getAllProductsNotInCart() {
         ArrayList<Product> productsList = new ArrayList<>();
-      
+
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + BOUGHT + " = 0 AND " + QUANTITY + " > 0";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -128,19 +128,20 @@ public class DB_Handler extends SQLiteOpenHelper{
 
         db.update(TABLE_NAME, values, DESCRIPTION + " = ?",
                 new String[]{String.valueOf(product.getDescription())});
+    }
 
-    public boolean check_database_existence() {
+    public boolean check_database_existence () {
         File dbFile = this.context.getDatabasePath(DATABASE_NAME);
         return dbFile.exists();
     }
-    public void deleteDB() {
-        if(check_database_existence()) {
+    public void deleteDB () {
+        if (check_database_existence()) {
             File dbFile = this.context.getDatabasePath(DATABASE_NAME);
             dbFile.delete();
         }
     }
-    public void reconstructDB() {
-        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
+    public void reconstructDB () {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
