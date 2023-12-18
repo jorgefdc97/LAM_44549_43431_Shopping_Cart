@@ -32,7 +32,6 @@ class HttpHandler {
             for(String product:resultado) {
                 MainActivity.db.add_product(new Product(product));
             }
-
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {

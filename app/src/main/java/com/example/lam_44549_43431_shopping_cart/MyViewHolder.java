@@ -47,13 +47,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         boughtBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton box, boolean isChecked) {
-
                 if(isChecked){
                     Toast.makeText(MainActivity.context, descriptionView.getText().toString() + " has been added to cart", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MainActivity.context, descriptionView.getText().toString() + " has been removed from cart", Toast.LENGTH_SHORT).show();
                 }
-
                 Product product = new Product(descriptionView.getText().toString(), Integer.parseInt(quantityView.getText().toString()), boughtBox.isChecked()?1:0);
 
                 MainActivity.db.update_product(product);
